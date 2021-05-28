@@ -8,13 +8,15 @@ import { ChainId, DAppProvider, Config, useEtherBalance, useEthers } from '@used
 const config: Config = {
   readOnlyChainId: ChainId.Ropsten,
   readOnlyUrls: {
+    [1337]: 'http://localhost:7545',
     [ChainId.Ropsten]: 'https://ropsten.infura.io/v3/a360947649f24936a45ebcdf22a48902',
     [ChainId.Kovan]: 'https://kovan.infura.io/v3/a360947649f24936a45ebcdf22a48902',
     [ChainId.Rinkeby]: 'https://rinkeby.infura.io/v3/a360947649f24936a45ebcdf22a48902',
     [ChainId.Mainnet]: 'https://mainnet.infura.io/v3/a360947649f24936a45ebcdf22a48902',
   },
   supportedChains: [
-    ChainId.Ropsten
+    ChainId.Ropsten,
+    1337
   ]
 }
 

@@ -13,7 +13,14 @@ export default function App() {
   const etherBalance = useEtherBalance(account)
   return (
     <div>
-      <ExplorePage {...{account: account as string, onLogin: activateBrowserWallet, onLogout: deactivate,}}/>
+      <ExplorePage {...{
+        account: account as string, 
+        onLogin: activateBrowserWallet, 
+        onLogout: deactivate,
+        projects: [
+          ProjPreviewStories.Bike.args as ProjPreviewProps
+        ]
+      }}/>
       {account && <p>Account: {account}</p>}
       {etherBalance && <p>Balance: {formatEther(etherBalance)}</p>}
     </div>

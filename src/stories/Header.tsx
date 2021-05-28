@@ -1,3 +1,4 @@
+import { RampInstantSDK } from '@ramp-network/ramp-instant-sdk';
 import React from 'react';
 
 import { Button } from './Button';
@@ -7,6 +8,17 @@ export interface HeaderProps {
   account?: string;
   onLogin: () => void;
   onLogout: () => void;
+}
+
+function buildRamp(account: string) { 
+  return new RampInstantSDK({
+  hostAppName: 'Raise',
+  hostLogoUrl: 'https://picsum.photos/200/40',
+  url: 'https://ri-widget-staging-ropsten.firebaseapp.com/',
+  userAddress: account,
+  fiatCurrency: "USD",
+  fiatValue: "0.03",
+});
 }
 
 export const Header: React.FC<HeaderProps> = ({ account, onLogin, onLogout }) => (
@@ -22,7 +34,10 @@ export const Header: React.FC<HeaderProps> = ({ account, onLogin, onLogout }) =>
       </div>
       <div>
         {account ? (
-          <Button size="small" onClick={onLogout} label="Disconnect Wallet" />
+          <>
+            <Button size="small" onClick={() => buildRamp(account).show()} label="Get ETH" />
+            <Button size="small" onClick={onLogout} label="Disconnect Wallet" />
+          </>
         ) : (
           <>
             <Button size="small" onClick={onLogin} label="Connect Wallet" />
