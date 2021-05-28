@@ -6,10 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import { ChainId, DAppProvider, Config, useEtherBalance, useEthers } from '@usedapp/core';
 
 const config: Config = {
-  readOnlyChainId: ChainId.Mainnet,
+  readOnlyChainId: ChainId.Ropsten,
   readOnlyUrls: {
+    [ChainId.Ropsten]: 'https://ropsten.infura.io/v3/a360947649f24936a45ebcdf22a48902',
+    [ChainId.Kovan]: 'https://kovan.infura.io/v3/a360947649f24936a45ebcdf22a48902',
+    [ChainId.Rinkeby]: 'https://rinkeby.infura.io/v3/a360947649f24936a45ebcdf22a48902',
     [ChainId.Mainnet]: 'https://mainnet.infura.io/v3/a360947649f24936a45ebcdf22a48902',
   },
+  supportedChains: [
+    ChainId.Ropsten
+  ]
 }
 
 ReactDOM.render(
