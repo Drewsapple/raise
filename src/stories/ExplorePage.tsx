@@ -9,11 +9,10 @@ export interface ExplorePageProps {
   account?: string;
   onLogin: () => void;
   onLogout: () => void;
-  onCreateAccount: () => void;
-  projects: ProjPreviewProps[]
+  projects?: ProjPreviewProps[];
 }
 
-export const ExplorePage: React.FC<ExplorePageProps> = ({ account, onLogin, onLogout, onCreateAccount, projects }) => (
+export const ExplorePage: React.FC<ExplorePageProps> = ({ account, onLogin, onLogout, projects }) => (
 <article>
   <Header account={account} onLogin={onLogin} onLogout={onLogout} />
   <span/>
@@ -22,9 +21,9 @@ export const ExplorePage: React.FC<ExplorePageProps> = ({ account, onLogin, onLo
     {
       "margin-left": "auto",
       "margin-right": "auto",
-    }
+    } as any
   }>
-    {projects.map((project: ProjPreviewProps) => (
+    {projects && projects.map((project: ProjPreviewProps) => (
       <Col sm={24} md={12} lg={8} xl={6} >
         <ProjPreview {...project}/>
       </Col>

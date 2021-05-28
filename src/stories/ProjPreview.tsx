@@ -12,7 +12,7 @@ export interface ProjPreviewProps {
 
 
 export const ProjPreview: React.FC<ProjPreviewProps> = ({projprogressdata, summary, title}) => (
-    <Card style={{ "width": "85%", "height": 240, "margin-left": "auto", "margin-right":"auto"}}>
+    <Card style={{ "width": "85%", "height": 240, "margin-left": "auto", "margin-right":"auto"} as any}>
         <Typography.Title level={3}>{title}</Typography.Title>
         <div style={{width: "100%"}}>
         <Space size="middle" direction="vertical" style={{"width": "inherit", "display": "block"}}>
