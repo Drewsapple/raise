@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/utils/escrow/RefundEscrow.sol";
 contract Raise {
     mapping(address => Campaign) campaignOwners;
     
-    event CampaignLaunched(address payable beneficiary, string name);
+    event CampaignLaunched(address payable campaignContract, string name);
     
     struct CampaignData {
         address payable beneficiary;

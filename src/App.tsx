@@ -1,28 +1,49 @@
-import React from 'react';
-import ReactDOM from 'react-dom'
+import { HashRouter, Route, RouteComponentProps, RouteProps, Switch } from 'react-router-dom';
 import './App.css';
-import { useEtherBalance, useEthers } from '@usedapp/core';
+import { ChainId, useEtherBalance, useEthers } from '@usedapp/core';
 import { formatEther } from '@ethersproject/units'
-import { Progress } from 'antd';
+import { Space, Statistic } from 'antd';
+import { Create } from './Create';
 import { ExplorePage } from './stories/ExplorePage';
 import * as ProjPreviewStories from './stories/ProjPreview.stories';
 import { ProjPreviewProps } from './stories/ProjPreview';
+import { Header } from './stories/Header';
+import { CampaignPage } from './CampaignPage';
 
 export default function App() {
-  const { activateBrowserWallet, deactivate, library, account } = useEthers()
+  const { activateBrowserWallet, deactivate, library, account, chainId } = useEthers()
   const etherBalance = useEtherBalance(account)
+
+  const campaigns = [
+    {...ProjPreviewStories.Bike.args, contract: '0xe42d18d3aaa8ae86f51072122276d0e0985fbc10' } as ProjPreviewProps
+  ]
+
   return (
     <div>
-      <ExplorePage {...{
-        account: account as string, 
-        onLogin: activateBrowserWallet, 
-        onLogout: deactivate,
-        projects: [
-          ProjPreviewStories.Bike.args as ProjPreviewProps
-        ]
-      }}/>
-      {account && <p>Account: {account}</p>}
-      {etherBalance && <p>Balance: {formatEther(etherBalance)}</p>}
+      <Header account={account as string} onLogin={activateBrowserWallet} onLogout={deactivate} />
+      <HashRouter>
+        <Switch>
+          <Route exact path="/">
+            <Create />
+          </Route>
+          <Route path="/stats" >
+            <Space direction="vertical">
+              {account && <Statistic title="Address" value={account} />}
+              {chainId && <Statistic title="ChainID" value={ChainId[chainId]} />}
+              {etherBalance && <Statistic title="Balance (ETH)" value={formatEther(etherBalance)} />}
+            </Space>
+          </Route>
+          <Route path="/explore">
+            <ExplorePage {...{
+              account: account as string, 
+              onLogin: activateBrowserWallet, 
+              onLogout: deactivate,
+              campaigns
+            }}/>
+          </Route>
+          <Route path="/campaigns/:address" component={CampaignPage}/>
+        </Switch>
+      </HashRouter>
     </div>
   )
 }
