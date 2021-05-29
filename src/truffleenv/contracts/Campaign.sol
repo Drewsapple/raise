@@ -14,5 +14,9 @@ contract Campaign is RefundEscrow {
      */
     constructor(address payable beneficiary_) RefundEscrow(beneficiary_){
     }
+
+    function deposit(address refundee) public payable virtual override {
+        super.deposit(refundee);
+    }
     
 }

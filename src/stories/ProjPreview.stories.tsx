@@ -1,7 +1,5 @@
-import React from 'react';
 import { Story, Meta } from '@storybook/react';
 
-import { ProjProgressProps} from "./ProjProgress"
 import { ProjPreviewProps, ProjPreview } from "./ProjPreview"
 
 export default {

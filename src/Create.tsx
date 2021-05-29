@@ -1,11 +1,8 @@
 import { useContractFunction, useEthers } from '@usedapp/core';
-import { Form, Input, Button, Select, InputNumber } from 'antd';
+import { Form, Input, Button, InputNumber } from 'antd';
 import { Contract } from '@ethersproject/contracts'
 import { Interface } from '@ethersproject/contracts/node_modules/@ethersproject/abi/lib/interface';
-import { utils } from 'ethers'
 import {abi} from "./truffleenv/build/contracts/Raise.json"
-
-const { Option } = Select;
 
 export const Create: React.FC = () => {
     const [form] = Form.useForm();
@@ -14,13 +11,13 @@ export const Create: React.FC = () => {
 
     const signer = library?.getSigner()
     const contract = new Contract(
-        '0x444a3FB8c8C81bf0dCA6BB82057bD4911a61C2E3',
+        '0x1DDfF3071C45a2cb440b4D4Dcd1434eF9b0cC51A',
         new Interface(abi)
     )
 
     contract.connect(signer!);
 
-    const {state, send} = useContractFunction(contract, "createCampaign", {})
+    const {/*state,*/ send} = useContractFunction(contract, "createCampaign", {})
 
     const layout = {
         labelCol: { span: 8 },

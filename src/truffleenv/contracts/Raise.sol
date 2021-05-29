@@ -21,4 +21,8 @@ contract Raise {
         Campaign justCreated = new Campaign(payable(msg.sender));
         emit CampaignLaunched(payable(address(justCreated)), _name);
     }
+
+    function depositToCampaign(address payable _campaign, address payable _refundee) public payable {
+        Campaign(_campaign).deposit(_refundee);
+    }
 }

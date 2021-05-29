@@ -1,7 +1,6 @@
 import { Col, Row } from 'antd';
 import React from 'react';
 
-import { Header } from './Header';
 import './page.css';
 import { ProjPreview, ProjPreviewProps } from './ProjPreview';
 
