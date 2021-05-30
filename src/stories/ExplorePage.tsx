@@ -20,8 +20,8 @@ export const ExplorePage: React.FC<ExplorePageProps> = ({ account, onLogin, onLo
   <br/>
   <Row gutter={[24, 24]} align="bottom" justify="start" style={
     {
-      "margin-left": "auto",
-      "margin-right": "auto",
+      "marginLeft": "auto",
+      "marginRight": "auto",
     }
   }>
     {projects.map((project: ProjPreviewProps) => (
