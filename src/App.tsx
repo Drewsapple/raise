@@ -6,8 +6,6 @@ import { useQuery } from 'urql';
 import { Space, Statistic } from 'antd';
 import { Create } from './Create';
 import { ExplorePage } from './stories/ExplorePage';
-import * as ProjPreviewStories from './stories/ProjPreview.stories';
-import { ProjPreviewProps } from './stories/ProjPreview';
 import { Header } from './stories/Header';
 import { CampaignData, CampaignPage } from './CampaignPage';
 import { useEffect, useState } from 'react';
@@ -37,7 +35,7 @@ export default function App() {
       setCampaigns(data.allCampaigns.data as CampaignData[]);
       console.log(campaigns)
     }
-  }, [fetching]);
+  }, [fetching, data, campaigns]);
 
   error && console.log(error)
 
