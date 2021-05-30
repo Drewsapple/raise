@@ -22,7 +22,7 @@ export const ProjProgress: React.FC<ProjProgressProps> = ({target, raised, endDa
         :
             `${raised}${currencySymbol || ""} / ${target}${currencySymbol || ""}`
         } />
-        <Progress style={{width:"90%", "margin-left": "auto", "margin-right": "auto", display: "block"}} strokeLinecap="square" percent={raised/target*100} />
+        <Progress style={{width:"90%", "margin-left": "auto", "margin-right": "auto", display: "block"} as any} strokeLinecap="square" percent={raised/target*100} />
         </Space>
     </div>
 );

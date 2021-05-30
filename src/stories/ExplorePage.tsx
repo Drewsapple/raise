@@ -1,34 +1,34 @@
-import { Col, Row } from 'antd';
 import React from 'react';
-
-import { Header } from './Header';
 import './page.css';
+import { Col, Row } from 'antd';
 import { ProjPreview, ProjPreviewProps } from './ProjPreview';
+import { CampaignData } from '../CampaignPage';
 
 export interface ExplorePageProps {
-  account?: string;
-  onLogin: () => void;
-  onLogout: () => void;
-  onCreateAccount: () => void;
-  projects: ProjPreviewProps[]
+  campaigns: CampaignData[];
 }
 
-export const ExplorePage: React.FC<ExplorePageProps> = ({ account, onLogin, onLogout, onCreateAccount, projects }) => (
-<article>
-  <Header account={account} onLogin={onLogin} onLogout={onLogout} />
-  <span/>
-  <br/>
+export const ExplorePage: React.FC<ExplorePageProps> = ({ campaigns }) => (
   <Row gutter={[24, 24]} align="bottom" justify="start" style={
     {
       "marginLeft": "auto",
       "marginRight": "auto",
     }
   }>
-    {projects.map((project: ProjPreviewProps) => (
+    {campaigns && campaigns.map((c: CampaignData) => (
       <Col sm={24} md={12} lg={8} xl={6} >
-        <ProjPreview {...project}/>
+        <ProjPreview {...{
+          title: c.title,
+          summary: c.description,
+          contract: c.contract,
+          projprogressdata: {
+            currencySymbol: c.currencySymbol,
+            symbolFirst: c.symbolFirst,
+            target: c.target,
+            raised: 696969
+          }
+        } as ProjPreviewProps}/>
       </Col>
     ))}
   </Row>
-</article>
 );
