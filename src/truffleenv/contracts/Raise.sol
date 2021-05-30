@@ -14,7 +14,6 @@ contract Raise {
     
     struct CampaignData {
         address payable beneficiary;
-        
     }
 
     function createCampaign(string memory _name) public {

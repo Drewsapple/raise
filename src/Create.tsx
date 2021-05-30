@@ -3,21 +3,36 @@ import { Form, Input, Button, InputNumber } from 'antd';
 import { Contract } from '@ethersproject/contracts'
 import { Interface } from '@ethersproject/contracts/node_modules/@ethersproject/abi/lib/interface';
 import {abi} from "./truffleenv/build/contracts/Raise.json"
+import { useMutation } from 'urql';
+import { useEffect } from 'react';
+
 
 export const Create: React.FC = () => {
     const [form] = Form.useForm();
-    const { account, library } = useEthers();
+    const { account } = useEthers();
 
+    const launchCampaign = `
+    mutation LaunchCampaign($data: CampaignInput!){
+    createCampaign(data: $data) {
+        title
+        endTime
+        target
+    }}`;
 
-    const signer = library?.getSigner()
+    const [result, createCampaign] = useMutation(launchCampaign);
+
     const contract = new Contract(
-        '0x1DDfF3071C45a2cb440b4D4Dcd1434eF9b0cC51A',
+        '0x77F4ee5aAf73E149827d67Da3D27031a8258698C',
         new Interface(abi)
     )
 
-    contract.connect(signer!);
+    const {state, send} = useContractFunction(contract, "createCampaign", {})
 
-    const {/*state,*/ send} = useContractFunction(contract, "createCampaign", {})
+    useEffect(() => {
+        if(state.status == "Success"){
+            publishCampaign(state.receipt!.logs[1].topics[0])
+        }
+    },[state])
 
     const layout = {
         labelCol: { span: 8 },
@@ -28,13 +43,25 @@ export const Create: React.FC = () => {
     };
 
     function callCreate() {
-        console.log(form.getFieldValue("title"))
-
-        if(account && signer) {
-            send(form.getFieldValue("title"))
+        if(account) {
+            send(form.getFieldValue("title")).then(
+            () => console.log(state)
+            )
         }
-
     }
+
+    function publishCampaign(campaignAddress: string) {
+        console.log(`New campaign published to addr: ${campaignAddress}`)
+        createCampaign({data: {
+            title: form.getFieldValue("title"),
+            description: form.getFieldValue("description"),
+            endTime: 1500000,
+            target: form.getFieldValue("target"),
+            contract: campaignAddress,
+            currencySymbol: " ETH",
+            symbolFirst: false
+        }}).then(console.log)
+    };
 
     return (
         <Form {...layout} form={form} name="control-hooks" onFinish={callCreate}>

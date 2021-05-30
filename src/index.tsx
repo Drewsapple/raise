@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ChainId, DAppProvider, Config } from '@usedapp/core';
+import { createClient, Provider } from 'urql';
+
 
 const config: Config = {
   readOnlyChainId: ChainId.Ropsten,
@@ -20,11 +22,22 @@ const config: Config = {
   ]
 }
 
+const client = createClient({
+  url: 'https://graphql.fauna.com/graphql',
+  fetchOptions: {
+    headers: {
+      authorization: `Bearer fnAEKa6NAnACAjbQ7jqx-OtZ_HyriN8HaQGfpfCo`
+    }
+  }
+});
+
 ReactDOM.render(
   <React.StrictMode>
-    <DAppProvider config={config}>
-      <App />
-    </DAppProvider>
+    <Provider value={client} >
+      <DAppProvider config={config}>
+        <App />
+      </DAppProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,23 +1,46 @@
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import { ChainId, useEtherBalance, useEthers } from '@usedapp/core';
-import { formatEther } from '@ethersproject/units'
+import { formatEther } from '@ethersproject/units';
+import { useQuery } from 'urql';
 import { Space, Statistic } from 'antd';
 import { Create } from './Create';
 import { ExplorePage } from './stories/ExplorePage';
 import * as ProjPreviewStories from './stories/ProjPreview.stories';
 import { ProjPreviewProps } from './stories/ProjPreview';
 import { Header } from './stories/Header';
-import { CampaignPage } from './CampaignPage';
+import { CampaignData, CampaignPage } from './CampaignPage';
+import { useEffect, useState } from 'react';
 
 export default function App() {
   const { activateBrowserWallet, deactivate, account, chainId } = useEthers()
   const etherBalance = useEtherBalance(account)
 
-  const campaigns = [
-    {...ProjPreviewStories.Bike.args, contract: '0xe42d18d3aaa8ae86f51072122276d0e0985fbc10' } as ProjPreviewProps,
-    {...ProjPreviewStories.Car.args, contract: '0xc3242f80c381f8dfd3fc5861d016d0c57d9e640c'} as ProjPreviewProps,
-  ]
+  const exploreQuery = `query ExplorePage {
+    allCampaigns {
+      data {
+        contract
+        title
+        target
+        currencySymbol
+        symbolFirst
+      }
+    }
+  }`;
+  const [result] = useQuery({query: exploreQuery})
+
+  const { data, fetching , error} = result;
+  const [campaigns, setCampaigns] = useState([] as CampaignData[]);
+
+  useEffect(() => {
+    if(!fetching) {
+      setCampaigns(data.allCampaigns.data as CampaignData[]);
+      console.log(campaigns)
+    }
+  }, [fetching]);
+
+  error && console.log(error)
+
 
   return (
     <div>

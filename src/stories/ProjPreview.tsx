@@ -7,9 +7,9 @@ import { HashRouter, Link } from 'react-router-dom';
 
 export interface ProjPreviewProps {
     projprogressdata: ProjProgressProps,
-    summary: string,
+    summary?: string,
     title: string,
-    contract?: string,
+    contract: string,
 }
 
 
@@ -22,7 +22,7 @@ export const ProjPreview: React.FC<ProjPreviewProps> = ({projprogressdata, summa
             <Space size="middle" direction="vertical" style={{"width": "inherit", "display": "block"}}>
             <ProjProgress {...projprogressdata} />
             <Typography.Paragraph ellipsis={{rows: 3}} >
-            {summary}
+            {summary ? summary : "No description provided."}
             </Typography.Paragraph>
             </Space>
             </div>

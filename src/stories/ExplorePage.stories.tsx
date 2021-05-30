@@ -16,19 +16,11 @@ const Template: Story<ExplorePageProps> = (args) => <ExplorePage {...args} />;
 export const LoggedIn = Template.bind({});
 LoggedIn.args = {
   ...HeaderStories.LoggedIn.args,
-  campaigns: [
-    ProjPreviewStories.Bike.args as ProjPreviewProps,
-    ProjPreviewStories.Car.args as ProjPreviewProps,
-    ProjPreviewStories.Fail.args as ProjPreviewProps,
-  ]
+  campaigns: []
 };
 
 export const LoggedOut = Template.bind({});
 LoggedOut.args = {
   ...HeaderStories.LoggedOut.args,
-  campaigns: [
-    ProjPreviewStories.Bike.args as ProjPreviewProps,
-    ProjPreviewStories.Car.args as ProjPreviewProps,
-    ProjPreviewStories.Fail.args as ProjPreviewProps,
-  ]
+  campaigns: []
 };
