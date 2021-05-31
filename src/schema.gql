@@ -1,14 +1,11 @@
 type Campaign {
     title: String!,
-    description: String,
-    target: Int!,
-    endTime: Int,
     contract: ID!,
+    description: String,
     currencySymbol: String,
     symbolFirst: Boolean
 }
 
 type Query {
-    allCampaigns: [Campaign!],
-    activeCampaigns: [Campaign!]
+    allCampaigns: [Campaign!]
 }

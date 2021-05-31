@@ -3,7 +3,7 @@ import './App.css';
 import { ChainId, useEtherBalance, useEthers } from '@usedapp/core';
 import { formatEther } from '@ethersproject/units';
 import { useQuery } from 'urql';
-import { Space, Statistic } from 'antd';
+import { Col, Row, Space, Statistic } from 'antd';
 import { Create } from './Create';
 import { ExplorePage } from './stories/ExplorePage';
 import { Header } from './stories/Header';
@@ -19,7 +19,7 @@ export default function App() {
       data {
         contract
         title
-        target
+        description
         currencySymbol
         symbolFirst
       }
@@ -32,21 +32,32 @@ export default function App() {
 
   useEffect(() => {
     if(!fetching) {
-      setCampaigns(data.allCampaigns.data as CampaignData[]);
-      console.log(campaigns)
+      setCampaigns(data?.allCampaigns.data as CampaignData[] || []);
     }
   }, [fetching, data, campaigns]);
 
   error && console.log(error)
 
-
   return (
     <div>
       <Header account={account as string} onLogin={activateBrowserWallet} onLogout={deactivate} />
+      <div style={{height: "5vh"}} />
       <HashRouter>
         <Switch>
           <Route exact path="/">
-            <Create />
+            <Row >
+              <Col span={6}>
+                <Create />
+              </Col>
+              <Col span={18}>
+                <ExplorePage {...{
+              account: account as string, 
+              onLogin: activateBrowserWallet, 
+              onLogout: deactivate,
+              campaigns
+            }}/>
+              </Col>
+            </Row>
           </Route>
           <Route path="/stats" >
             <Space direction="vertical">
@@ -63,7 +74,9 @@ export default function App() {
               campaigns
             }}/>
           </Route>
-          <Route path="/campaigns/:address" component={CampaignPage}/>
+          <Route path="/campaigns/:address" >
+            <CampaignPage campaigns={campaigns} />
+          </Route>
         </Switch>
       </HashRouter>
     </div>

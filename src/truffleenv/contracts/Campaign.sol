@@ -30,5 +30,8 @@ contract Campaign is RefundEscrow {
         return address(this).balance >= fundraisingTarget;
     }
 
+    function getStats() public view returns (uint, uint, uint) {
+        return (fundraisingTarget, address(this).balance, endTime);
+    }
     
 }

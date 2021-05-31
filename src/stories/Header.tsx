@@ -14,11 +14,12 @@ export interface HeaderProps {
 function buildRamp(account: string) { 
   return new RampInstantSDK({
   hostAppName: 'Raise',
-  hostLogoUrl: 'https://picsum.photos/200/40',
+  hostLogoUrl: 'http://0xraise.netlify.com/logo.png',
   url: 'https://ri-widget-staging-ropsten.firebaseapp.com/',
   userAddress: account,
   fiatCurrency: "USD",
   fiatValue: "0.03",
+  swapAsset: "ETH",
 });
 }
 
@@ -34,16 +35,6 @@ export const Header: React.FC<HeaderProps> = ({ account, onLogin, onLogout }) =>
             </g>
           </svg>
           <h1>Raise</h1>
-        </Link>
-      </div>
-      <div>
-        <Link to="/stats">
-          <h3>Stats</h3>
-        </Link>
-      </div>
-      <div>
-        <Link to="/explore">
-          <h3>Explore</h3>
         </Link>
       </div>
       <div>
